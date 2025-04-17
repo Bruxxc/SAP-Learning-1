@@ -1,7 +1,7 @@
 {
     "_version": "1.28.0",
     "sap.app": {
-        "id": "<...>",
+        "id": "sap.training.exc",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -59,26 +59,33 @@
             }
         },
         "contentDensities": {
-            "compact": false,
+            "compact": true,
             "cozy": true
         },
         "models": {
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "<...>"
+                    "bundleName": "sap.training.exc.i18n.i18n",
+                    "supportedLocales": [""],
+                    "fallbackLocale": ""
                 }
             },
-            "ODataModel": {
-                "dataSource": "<...>",
+            "": {
+                "dataSource": "mainService",
                 "settings": {
                     "synchronizationMode": "None",
                     "operationMode": "Server",
                     "autoExpandSelect": true,
                     "earlyRequests": true
                 }
-            }
+            },
+            "localData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "model/data.json"
+                }
         },
+        "handleValidation": true,
         "resources": {
             "css": [
                 {
@@ -93,13 +100,66 @@
                 "async": true,
                 "viewPath": "sap.training.exc.view",
                 "controlAggregation": "pages",
-                "controlId": "<...>"
+                "controlId": "appRouter",
+                "bypassed": {
+                "target": [
+                    "notFound"
+                ]
+                }
             },
-            "routes": [],
-            "targets": {}
+            "routes": [
+                {
+                    "name": "overview",
+                    "pattern": "",
+                    "target": [
+                    "overview"
+                    ]
+                },
+                {
+                    "name": "test",
+                    "pattern": "test",
+                    "target": [
+                    "test"
+                    ]
+                },
+                {
+                    "name": "detail",
+                    "pattern": "detail/{customerId}",
+                    "target": [
+                    "detail"
+                    ]
+                }
+            ],
+            "targets": {
+
+                "overview": {
+                "viewId": "overview",
+                "viewName": "Overview",
+                "viewLevel": 1
+                },
+
+                "test": {
+                "viewId": "testView",
+                "viewName": "Test",
+                "viewLevel": 1
+                },
+
+                "detail": {
+                    "viewId": "detail",
+                    "viewName": "Detail",
+                    "viewLevel": 2
+                },
+                
+                "notFound": {
+                    "viewId":"notFound",
+                    "viewName": "NotFound",
+                    "transition": "show"
+                }
+
+            }
         },
         "rootView": {
-            "viewName": "<...>",
+            "viewName": "sap.training.exc.view.App",
             "type": "XML",
             "async": true,
             "id": "App"

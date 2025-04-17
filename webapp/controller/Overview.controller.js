@@ -1,14 +1,102 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/core/syncStyleClass",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller, syncStyleClass, JSONModel, Filter, FilterOperator,MessageToast,MessageBox) {
         "use strict";
 
         return Controller.extend("sap.training.exc.controller.Overview", {
+            
+          
+          onInit: function() {
+            var oModel = new JSONModel();
 
+            var oView= this.getView();
+            oView.setModel(oModel,"customer");
+
+
+          },
+          
+          onSave: function () {
+            var oModelData = this.getView().getModel("customer").getData();
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+
+            var aRequiredFields = [
+              "Form",
+              "CustomerName",
+              "Discount",
+              "Street",
+              "PostCode",
+              "City",
+              "Country",
+              "Email",
+              "Telephone"
+            ];
+            
+            // Validar que todos los campos estén completos
+            var bIsValid = aRequiredFields.every(function (sField) {
+              return oModelData[sField] !== undefined && oModelData[sField] !== null && oModelData[sField].toString().trim() !== "";
+            });
+            
+            if (!bIsValid) {
+              MessageBox.warning("Por favor, complete todos los campos antes de crear el cliente.");
+              return;
+            }
+
+
+
+            this.byId("customerTable").getBinding("items").create({
+              "Form": oModelData.Form,
+              "CustomerName": oModelData.CustomerName,
+              "Discount": oModelData.Discount + "",
+              "Street": oModelData.Street,
+              "PostCode": oModelData.PostCode,
+              "City": oModelData.City,
+              "Country": oModelData.Country,
+              "Email": oModelData.Email,
+              "Telephone": oModelData.Telephone
+            }).created().then(function () {
+              MessageToast.show(oResourceBundle.getText("customerCreatedMessage"));
+            });
+
+
+            },
+
+            onCustomerChange: function (oEvent){
+              var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
+              this.byId("bookingTable").setBindingContext(oBindingContext);
+            },
+
+            onFilterCustomers: function (oEvent) {
+              var aFilter = [];
+              var sQuery = oEvent.getParameter("query");
+              if (sQuery && sQuery.length > 0) {
+                aFilter.push(new Filter("CustomerName", FilterOperator.Contains, sQuery));
+              }    
+              var oTable = this.byId("customerTable");
+              var oBinding = oTable.getBinding("items");
+              oBinding.filter(aFilter);
+            },
+            
+            onNavToDetails: function (oEvent) {
+              var oItem = oEvent.getSource();
+              var oRouter = this.getOwnerComponent().getRouter();
+            
+            
+              oRouter.navTo("detail", {
+                // Pasar id de customer al navegar a details
+                customerId: oItem.getBindingContext().getPath().substring("/UX_Customer".length)
+              });
+            }
 
         });
     });

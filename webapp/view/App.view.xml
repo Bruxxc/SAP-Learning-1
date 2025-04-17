@@ -1,0 +1,20 @@
+<mvc:View 
+    controllerName="sap.training.exc.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    >
+    
+  <Shell>
+    <VBox>
+      <HBox justifyContent="Center">
+        <Button text="Go to Main" press=".onGoToMainPage" />
+        <Button text="Go to Test" press=".onGoToTestPage" />
+      </HBox>
+
+      <App id="appRouter">
+      </App>
+    </VBox>
+  </Shell>
+
+</mvc:View>
