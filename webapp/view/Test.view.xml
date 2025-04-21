@@ -1,13 +1,96 @@
-<mvc:View     
+<mvc:View
     controllerName="sap.training.exc.controller.Test"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-
+    xmlns="sap.m"
+>
     <Page title="Test Page">
         <content>
-        <Button press=".testFunction" text="Botón"></Button>
-        <Text id="contadorText" text="0"></Text>
+            <!-- Tabla de listado de usuarios -->
+
+            <!-- AJUSTAR PATH DE LOS ITEMS -->
+            <Table
+                headerText="Customers"
+                mode="SingleSelectLeft"
+                selectionChange=".onCustomerChange"
+                class="sapUiResponsiveMargin"
+                width="auto"
+                id="UsersRoleTable"
+                items="{
+                path: '/UX_Customer'
+              }"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Usuarios" />
+                        <ToolbarSpacer />
+
+                        <!-- Buscador -->
+                        <SearchField
+                            width="40%"
+                            search=".onFilterUsers"
+                        />
+
+                        <!-- Botón de crear usuario -->
+                        <Button
+                            text="Crear Usuario"
+                            press=".onDisplayCUPanel"
+                            icon="sap-icon://add"
+                        />
+                    </Toolbar>
+                </headerToolbar>
+
+
+                <columns>
+                    <Column>
+                        <header>
+                            <Text text="Name" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Desktop">
+                        <header>
+                            <Text text="Street" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Desktop">
+                        <header>
+                            <Text text="PostCode" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Text text="City" />
+                        </header>
+                    </Column>
+                    <Column minScreenWidth="Tablet">
+                        <header>
+                            <Text text="Country" />
+                        </header>
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <header>
+                            <Text text="Email" />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem
+                        type="Navigation"
+                        press=".onNavToDetails"
+                    >
+                        <cells>
+                            <ObjectIdentifier title="{CustomerName}" />
+                            <Text text="{Street}" />
+                            <Text text="{PostCode}" />
+                            <Text text="{City}" />
+                            <Text text="{Country}" />
+                            <Text text="{Email}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
         </content>
     </Page>
-    
-</mvc:View >
+</mvc:View>

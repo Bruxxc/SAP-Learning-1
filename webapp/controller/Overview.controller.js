@@ -11,7 +11,7 @@ sap.ui.define([
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, syncStyleClass, JSONModel, Filter, FilterOperator,MessageToast,MessageBox) {
+    function (Controller, JSONModel, Filter, FilterOperator,MessageToast,MessageBox) {
         "use strict";
 
         return Controller.extend("sap.training.exc.controller.Overview", {
