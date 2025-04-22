@@ -10,7 +10,6 @@
             <!-- AJUSTAR PATH DE LOS ITEMS -->
             <Table
                 headerText="Customers"
-                mode="SingleSelectLeft"
                 selectionChange=".onCustomerChange"
                 class="sapUiResponsiveMargin"
                 width="auto"
@@ -22,7 +21,7 @@
                 <headerToolbar>
                     <Toolbar>
                         <Title text="Usuarios" />
-                        <ToolbarSpacer />
+                        <ToolbarSpacer/>
 
                         <!-- Buscador -->
                         <SearchField
@@ -39,7 +38,9 @@
                     </Toolbar>
                 </headerToolbar>
 
+                <!-- Cambiar campos de los usuarios -->
 
+                <!-- Headers -->
                 <columns>
                     <Column>
                         <header>
@@ -75,6 +76,8 @@
                         </header>
                     </Column>
                 </columns>
+                
+                <!-- Datos de usuarios -->
                 <items>
                     <ColumnListItem
                         type="Navigation"

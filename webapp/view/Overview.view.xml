@@ -55,7 +55,7 @@
                             <Input value="{customer>/City}" />
                             <Label text="{i18n>countryLabelText}" />
                             <Input value="{customer>/Country}" />
-                            <Input value="" />
+                            
 
                             <core:Title text="{i18n>contactDataFormContainerTitle}" />
                             <Label text="{i18n>emailLabelText}" />
